@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Lider Otomarket · Ürün Detay</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2757BB}a:hover{color:#1F4699}
+.gizli{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kart{transition:border-color .15s,box-shadow .15s}
+.kart:hover{border-color:#0A0A0A!important;box-shadow:0 10px 24px rgba(10,10,10,0.08)}
+.btn-mavi:hover{background:#1F4699!important;color:#FFFFFF!important}
+.btn-cerceve:hover{border-color:#0A0A0A!important}
+.menu-link:hover{color:#2757BB!important;border-bottom-color:#2757BB!important}
+.alt-link:hover{color:#FFFFFF!important}
+:focus-visible{outline:2px solid #2757BB;outline-offset:2px}
+</style>
+</helmet>
+<div style="font-family: Poppins, 'Segoe UI', system-ui, sans-serif; color: #0A0A0A; background: #FFFFFF; font-size: 15px; line-height: 1.6">
+
+<!-- Üst bar: tek satır -->
+<header style="position: sticky; top: 0; z-index: 20; background: #FFFFFF; border-bottom: 1px solid #DFE2E8">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 32px; box-sizing: border-box; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 32px">
+<a href="Main.dc.html" aria-label="Lider Otomarket ana sayfa" style="flex: none; display: block">
+<img src="/_blob/7b7d5d45da3637dc4b920358103f0c06" alt="Lider Otomarket" style="height: 48px; width: auto; display: block">
+</a>
+<nav aria-label="Ana menü" style="flex: 1 1 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px 24px; font-size: 14px; font-weight: 500">
+<a class="menu-link" href="Kategori.dc.html" style="color: #0A0A0A; text-decoration: none; padding: 12px 0; border-bottom: 2px solid transparent">Tüm Ürünler</a>
+<a class="menu-link" href="Main.dc.html" style="color: #0A0A0A; text-decoration: none; padding: 12px 0; border-bottom: 2px solid transparent">Öne Çıkanlar</a>
+<a class="menu-link" href="Kategori.dc.html" style="color: #0A0A0A; text-decoration: none; padding: 12px 0; border-bottom: 2px solid transparent">Yeni Ürünler</a>
+<div style="position: relative">
+<button type="button" class="menu-link" onClick="{{toggleKat}}" aria-expanded="{{katOpenText}}" style="display: flex; align-items: center; gap: 4px; padding: 12px 0; background: none; border: none; border-bottom: 2px solid transparent; font: inherit; color: #0A0A0A; cursor: pointer">Kategoriler
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{katOpen}}" hint-placeholder-val="{{false}}">
+<div style="position: absolute; top: calc(100% + 13px); left: 50%; transform: translateX(-50%); width: 260px; background: #FFFFFF; border: 1px solid #DFE2E8; border-top: 2px solid #2757BB; padding: 8px 0; z-index: 30; box-shadow: 0 10px 24px rgba(10,10,10,0.08)">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+<a href="Kategori.dc.html" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; color: #0A0A0A; text-decoration: none; font-size: 14px">{{c.name}}<span style="color: #5A5F6B; font-size: 12px">{{c.count}}</span></a>
+</sc-for>
+</div>
+</sc-if>
+</div>
+<a class="menu-link" href="Kategori.dc.html" style="color: #C2410C; text-decoration: none; padding: 12px 0; border-bottom: 2px solid transparent; font-weight: 600">Kasım İndirimi</a>
+</nav>
+<div style="flex: none; display: flex; align-items: center; gap: 8px">
+<form role="search" onSubmit="{{noSubmit}}" style="display: flex; align-items: center; gap: 8px; width: 240px; height: 44px; padding: 0 12px; box-sizing: border-box; background: #F4F5F7; border: 1px solid #8A909C">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true" style="flex: none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<label for="ara" class="gizli">Ürün ara</label>
+<input id="ara" type="search" placeholder="Ürün ara…" style="border: none; outline: none; background: transparent; font: inherit; font-size: 14px; color: #0A0A0A; width: 100%; min-width: 0">
+</form>
+<a href="Favoriler.dc.html" aria-label="Favorilerim" style="position: relative; width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #DFE2E8; color: #0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"></path></svg>
+<span style="position: absolute; top: -8px; right: -8px; min-width: 20px; height: 20px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">{{favCount}}</span>
+</a>
+<a href="https://www.instagram.com/liderotomarket" aria-label="Instagram: @liderotomarket" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #DFE2E8; color: #0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 24px 32px 0; box-sizing: border-box">
+
+<nav aria-label="Konum" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: #5A5F6B">
+<a href="Main.dc.html" style="color: #5A5F6B; text-decoration: none">Ana Sayfa</a><span aria-hidden="true">/</span><a href="Kategori.dc.html" style="color: #5A5F6B; text-decoration: none">Paspas &amp; Bagaj</a><span aria-hidden="true">/</span><span style="color: #0A0A0A; font-weight: 500">3D Havuzlu Paspas Seti</span>
+</nav>
+
+<div style="display: flex; flex-wrap: wrap; gap: 48px; margin-top: 24px">
+
+<!-- Galeri -->
+<div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="position: relative; aspect-ratio: 1 / 1; background: #F4F5F7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5A5F6B; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">
+<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#8A909C" stroke-width="0.75" aria-hidden="true"><rect x="3" y="4" width="18" height="16"></rect><circle cx="9" cy="10" r="2"></circle><path d="M3 18l6-5 4 3 3-2 5 4"></path></svg>
+{{activeLabel}}
+<span style="position: absolute; top: 16px; left: 16px; display: inline-flex; align-items: center; height: 24px; padding: 0 12px; border-radius: 999px; background: #C2410C; color: #FFFFFF; font-size: 11px; font-weight: 600; letter-spacing: 0.08em">%25 İNDİRİM</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-label="{{t.label}}" aria-pressed="{{t.selText}}" style="aspect-ratio: 1 / 1; background: #F4F5F7; border: 2px solid {{t.border}}; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #5A5F6B; font: inherit; font-size: 12px; font-weight: 600">{{t.num}}</button>
+</sc-for>
+</div>
+</div>
+
+<!-- Bilgiler -->
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #2757BB">Paspas &amp; Bagaj</span>
+<h1 style="margin: 6px 0 0; font-size: 36px; line-height: 42px; font-weight: 700; letter-spacing: -0.5px">3D Havuzlu Paspas Seti</h1>
+</div>
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid #DFE2E8">
+<span style="font-size: 32px; line-height: 38px; font-weight: 700; color: #C2410C">899,00 TL</span>
+<span style="font-size: 16px; color: #5A5F6B; text-decoration: line-through">1.199,00 TL</span>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 12px; border-radius: 999px; background: #FFF1EA; color: #C2410C; font-size: 12px; font-weight: 600">300,00 TL tasarruf</span>
+</div>
+<p style="margin: 0; max-width: 560px">Kenarları yükseltilmiş havuzlu yapı su, çamur ve kumu paspasın içinde tutar. Ön ve arka koltuklar için 4 parçalı set.</p>
+
+<dl style="margin: 0; display: grid; grid-template-columns: 160px minmax(0, 1fr); border-top: 1px solid #DFE2E8; font-size: 14px">
+<dt style="padding: 12px 0; border-bottom: 1px solid #DFE2E8; color: #5A5F6B">Parça sayısı</dt><dd style="margin: 0; padding: 12px 0; border-bottom: 1px solid #DFE2E8; font-weight: 500">4 parça</dd>
+<dt style="padding: 12px 0; border-bottom: 1px solid #DFE2E8; color: #5A5F6B">Malzeme</dt><dd style="margin: 0; padding: 12px 0; border-bottom: 1px solid #DFE2E8; font-weight: 500">[Shopier ürün açıklamasından]</dd>
+<dt style="padding: 12px 0; border-bottom: 1px solid #DFE2E8; color: #5A5F6B">Uyumlu araçlar</dt><dd style="margin: 0; padding: 12px 0; border-bottom: 1px solid #DFE2E8; font-weight: 500">[Shopier ürün açıklamasından]</dd>
+<dt style="padding: 12px 0; border-bottom: 1px solid #DFE2E8; color: #5A5F6B">Kargo</dt><dd style="margin: 0; padding: 12px 0; border-bottom: 1px solid #DFE2E8; font-weight: 500">Shopier sipariş sayfasında belirtilir</dd>
+</dl>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn-mavi" href="https://www.shopier.com/liderotomarket" style="flex: 1 1 260px; display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; background: #2757BB; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 600">Shopier'de Al
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
+<button type="button" class="btn-cerceve" onClick="{{toggleMain}}" aria-pressed="{{mainFavText}}" style="flex: 1 1 200px; display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; background: #FFFFFF; border: 1px solid {{mainFavBorder}}; color: {{mainFavColor}}; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="{{mainFavFill}}" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"></path></svg>
+{{mainFavLabel}}</button>
+</div>
+
+<div style="background: #EAF0FB; padding: 20px 24px">
+<h2 style="margin: 0 0 12px; font-size: 15px; font-weight: 600; color: #183673">Nasıl sipariş verilir?</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #183673">
+<li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: none; width: 22px; height: 22px; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">1</span>"Shopier'de Al" butonuna basın.</li>
+<li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: none; width: 22px; height: 22px; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">2</span>Açılan Shopier sayfasında adet ve adres bilgilerinizi girin.</li>
+<li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: none; width: 22px; height: 22px; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">3</span>Ödemeyi Shopier güvencesiyle tamamlayın.</li>
+</ol>
+</div>
+<p style="margin: 0; font-size: 13px; color: #5A5F6B">Sorunuz mu var? liderotomarket@gmail.com · <a href="https://www.instagram.com/liderotomarket" style="text-decoration: none">@liderotomarket</a></p>
+</div>
+</div>
+
+<!-- Benzer ürünler -->
+<section aria-labelledby="baslik-benzer" style="padding-top: 64px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px 24px; padding-bottom: 16px; margin-bottom: 32px; border-bottom: 2px solid #0A0A0A">
+<div><span style="display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #2757BB">Bunlara da bakın</span><h2 id="baslik-benzer" style="margin: 4px 0 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.3px">Benzer Ürünler</h2></div>
+<a href="Kategori.dc.html" style="display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; text-decoration: none">Tüm ürünler
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px">
+<sc-for list="{{similar}}" as="p" hint-placeholder-count="4">
+<article class="kart" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #DFE2E8">
+<a href="Urun.dc.html" aria-label="{{p.name}}" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; aspect-ratio: 1 / 1; background: #F4F5F7; color: #5A5F6B; text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">
+<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#8A909C" stroke-width="1" aria-hidden="true"><rect x="3" y="4" width="18" height="16"></rect><circle cx="9" cy="10" r="2"></circle><path d="M3 18l6-5 4 3 3-2 5 4"></path></svg>
+Ürün görseli
+</a>
+<div style="position: absolute; top: 12px; left: 12px; display: flex; gap: 6px">
+<sc-if value="{{p.isNew}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px; background: #0A0A0A; color: #FFFFFF; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Yeni</span></sc-if>
+<sc-if value="{{p.hasOld}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px; background: #C2410C; color: #FFFFFF; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">{{p.pctText}} İndirim</span></sc-if>
+</div>
+<button type="button" onClick="{{p.toggle}}" aria-label="{{p.favLabel}}" aria-pressed="{{p.favText}}" style="position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #FFFFFF; border: 1px solid {{p.favBorder}}; color: {{p.favColor}}; cursor: pointer; padding: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="{{p.favFill}}" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"></path></svg>
+</button>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 16px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5A5F6B">{{p.category}}</span>
+<a href="Urun.dc.html" style="min-height: 44px; color: #0A0A0A; text-decoration: none; font-size: 15px; line-height: 22px; font-weight: 600">{{p.name}}</a>
+<div style="margin-top: auto; display: flex; align-items: baseline; gap: 8px">
+<span style="font-size: 20px; line-height: 24px; font-weight: 700; color: {{p.priceColor}}">{{p.priceText}}</span>
+<sc-if value="{{p.hasOld}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #5A5F6B; text-decoration: line-through">{{p.oldText}}</span></sc-if>
+</div>
+<a class="btn-mavi" href="https://www.shopier.com/liderotomarket" style="margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; background: #2757BB; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600">Shopier'de Al
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer style="margin-top: 64px; background: #0A0A0A; color: #FFFFFF">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 32px 24px; box-sizing: border-box">
+<div style="display: flex; flex-wrap: wrap; gap: 32px 48px; padding-bottom: 32px; border-bottom: 1px solid #2B2B2B">
+<div style="flex: 2 1 280px">
+<img src="/_blob/1dd632f796f48aff6fea4b29bd211b71" alt="Lider Otomarket" style="height: 56px; width: auto; display: block">
+<p style="margin: 16px 0 0; max-width: 300px; color: #B4BAC6; font-size: 13px; line-height: 20px">Otomobil aksesuar ve parçaları. Ürünleri burada inceleyin, siparişinizi Shopier mağazamızdan verin.</p>
+</div>
+<div style="flex: 1 1 160px">
+<h3 style="margin: 0 0 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Alışveriş</h3>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<a class="alt-link" href="Main.dc.html" style="color: #B4BAC6; text-decoration: none; font-size: 13px">Ana Sayfa</a>
+<a class="alt-link" href="Kategori.dc.html" style="color: #B4BAC6; text-decoration: none; font-size: 13px">Tüm Ürünler</a>
+<a class="alt-link" href="Favoriler.dc.html" style="color: #B4BAC6; text-decoration: none; font-size: 13px">Favorilerim</a>
+<a class="alt-link" href="https://www.shopier.com/liderotomarket" style="color: #B4BAC6; text-decoration: none; font-size: 13px">Shopier mağazası ↗</a>
+</div>
+</div>
+<div style="flex: 1 1 200px">
+<h3 style="margin: 0 0 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">İletişim</h3>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #B4BAC6">
+<span>liderotomarket@gmail.com</span>
+<a class="alt-link" href="https://www.instagram.com/liderotomarket" style="color: #B4BAC6; text-decoration: none">@liderotomarket</a>
+</div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 24px; color: #B4BAC6; font-size: 12px">
+<span>© 2026 Lider Otomarket</span><span>Siparişler Shopier altyapısıyla alınır.</span>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2150}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { favs: { 2: true, 4: true, 7: true }, img: 0, katOpen: false };
+  }
+  tl(n) {
+    return n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TL';
+  }
+  toggleFav(id) {
+    const next = Object.assign({}, this.state.favs);
+    if (next[id]) delete next[id]; else next[id] = true;
+    this.setState({ favs: next });
+  }
+  decorate(list) {
+    const favs = this.state.favs;
+    return list.map((p) => {
+      const fav = !!favs[p.id];
+      const pct = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+      return Object.assign({}, p, {
+        hasOld: !!p.old,
+        isNew: !!p.isNew,
+        pctText: '%' + pct,
+        priceText: this.tl(p.price),
+        oldText: p.old ? this.tl(p.old) : '',
+        priceColor: p.old ? '#C2410C' : '#0A0A0A',
+        favFill: fav ? 'currentColor' : 'none',
+        favColor: fav ? '#C2410C' : '#0A0A0A',
+        favBorder: fav ? '#C2410C' : '#DFE2E8',
+        favText: fav ? 'true' : 'false',
+        favLabel: fav ? p.name + ' favorilerden çıkar' : p.name + ' favorilere ekle',
+        toggle: () => this.toggleFav(p.id)
+      });
+    });
+  }
+  renderVals() {
+    const similar = [
+      { id: 5, name: 'Katlanır Bagaj Organizeri', category: 'Paspas & Bagaj', price: 379.9, old: 499.9 },
+      { id: 8, name: 'Mikrofiber Kurulama Havlusu', category: 'Bakım & Temizlik', price: 149.9 },
+      { id: 11, name: 'Ortopedik Koltuk Minderi', category: 'İç Aksesuar', price: 459.9, old: 599.9 },
+      { id: 1, name: 'Deri Direksiyon Kılıfı – Siyah', category: 'İç Aksesuar', price: 349.9 }
+    ];
+    const cats = [
+      { name: 'İç Aksesuar', count: 3 }, { name: 'Dış Aksesuar', count: 2 }, { name: 'Paspas & Bagaj', count: 2 },
+      { name: 'Aydınlatma', count: 1 }, { name: 'Elektronik', count: 2 }, { name: 'Bakım & Temizlik', count: 2 }
+    ];
+    const thumbs = [1, 2, 3, 4].map((n, i) => {
+      const sel = this.state.img === i;
+      return { num: n, label: 'Görsel ' + n, selText: sel ? 'true' : 'false', border: sel ? '#2757BB' : '#F4F5F7', pick: () => this.setState({ img: i }) };
+    });
+    const mainFav = !!this.state.favs[2];
+    return {
+      cats: cats,
+      thumbs: thumbs,
+      activeLabel: 'Ürün görseli ' + (this.state.img + 1) + ' / 4',
+      similar: this.decorate(similar),
+      favCount: Object.keys(this.state.favs).length,
+      mainFavLabel: mainFav ? 'Favorilerde' : 'Favorilere ekle',
+      mainFavText: mainFav ? 'true' : 'false',
+      mainFavFill: mainFav ? 'currentColor' : 'none',
+      mainFavColor: mainFav ? '#C2410C' : '#0A0A0A',
+      mainFavBorder: mainFav ? '#C2410C' : '#8A909C',
+      toggleMain: () => this.toggleFav(2),
+      katOpen: this.state.katOpen,
+      katOpenText: this.state.katOpen ? 'true' : 'false',
+      toggleKat: () => this.setState({ katOpen: !this.state.katOpen }),
+      noSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

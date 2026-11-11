@@ -1,0 +1,50 @@
+# Lider Otomarket site ayarları.
+# Bu dosyayı değiştirdikten sonra siteyi yeniden başlatın (yerelde: make run, canlıda: make deploy).
+
+site:
+  ad: Lider Otomarket
+  adres: https://liderotomarket.com
+  shopier_magaza: https://www.shopier.com/liderotomarket
+  eposta: liderotomarket@gmail.com
+  instagram: liderotomarket
+  aciklama: Otomobil aksesuar ve parçaları. Ürünleri burada inceleyin, siparişinizi Shopier mağazamızdan verin.
+
+# Ana sayfadaki mavi kampanya bandı.
+# aktif: false yapılırsa bant "vitrin" metinleriyle gösterilir ve menüdeki kampanya linki gizlenir.
+kampanya:
+  aktif: true
+  etiket: Kasım İndirimi
+  baslik: Kasım'a özel indirim
+  aciklama: Seçili paspas, bagaj ve bakım ürünlerinde Kasım sonuna kadar geçerli. Siparişler Shopier üzerinden.
+  bitis: 30 Kasım'a kadar
+  buton: İndirimli ürünleri gör
+
+# Kampanya kapalıyken bantta gösterilecek metinler.
+vitrin:
+  etiket: Lider Otomarket
+  baslik: Aracınız için her şey
+  aciklama: İç ve dış aksesuar, oto kokuları, paspas ve bakım ürünleri. Siparişler Shopier üzerinden.
+  buton: Tüm ürünleri gör
+
+# "Öne Çıkanlar" bölümünde gösterilecek Shopier ürün ID'leri (sırasıyla).
+# ID'yi Shopier ürün linkinin sonundaki sayıdan alabilirsiniz: shopier.com/liderotomarket/51853723
+# Boş bırakılırsa Shopier'deki sıralamaya göre ilk ürünler gösterilir.
+one_cikanlar: []
+
+# Son kaç gün içinde eklenen ürünlere "YENİ" rozeti verilsin (urunler.json'daki "createdAt" tarihine göre).
+# Hiçbir üründe createdAt yoksa listedeki en yeni 12 ürün "yeni" sayılır.
+yeni_urun_gun: 30
+
+# Kategorilerin gösterim sırası (Shopier'deki adlarıyla). Listede olmayanlar sona, ürün sayısına göre eklenir.
+kategori_sirasi:
+  - İç Aksesuar
+  - Dış Aksesuar
+  - Oto Kokuları
+  - Anahtarlık
+  - Ruhsat Kılıfı
+  - Oto Paspas
+  - Kolçak
+  - Temizlik Bakım
+  - Sibop Kapağı
+  - Start Stop Halkası
+  - Telefon Aksesuarı

@@ -1,0 +1,44 @@
+{{define "layout" -}}
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}}</title>
+{{with .Description}}<meta name="description" content="{{.}}">{{end}}
+{{if .NoIndex}}<meta name="robots" content="noindex, follow">{{end}}
+<link rel="canonical" href="{{.Canonical}}">
+<meta property="og:site_name" content="{{.Site.Name}}">
+<meta property="og:type" content="{{.OGType}}">
+<meta property="og:title" content="{{.Title}}">
+{{with .Description}}<meta property="og:description" content="{{.}}">{{end}}
+<meta property="og:url" content="{{.Canonical}}">
+<meta property="og:image" content="{{.OGImage}}">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#2757BB">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="{{asset "img/favicon-32.png"}}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{asset "img/favicon.png"}}">
+<link rel="apple-touch-icon" href="{{asset "img/apple-touch-icon.png"}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="{{asset "css/site.css"}}">
+{{with .JSONLD}}<script type="application/ld+json">{{.}}</script>{{end}}
+</head>
+<body>
+<a class="gizli" href="#icerik">İçeriğe geç</a>
+{{template "ust-bar" .}}
+{{template "mobil-ust-bar" .}}
+{{template "mobil-menu" .}}
+<div id="icerik">
+{{template "icerik" .}}
+</div>
+{{template "alt-bilgi" .}}
+{{template "mobil-alt-bilgi" .}}
+{{block "sayfa-sonu" .}}{{end}}
+<script src="{{asset "js/site.js"}}" defer></script>
+</body>
+</html>
+{{- end}}

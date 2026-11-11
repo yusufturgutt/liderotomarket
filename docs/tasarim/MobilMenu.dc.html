@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Lider Otomarket · Mobil Menü</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2757BB}a:hover{color:#1F4699}
+:focus-visible{outline:2px solid #2757BB;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; font-family: Poppins, 'Segoe UI', system-ui, sans-serif; color: #0A0A0A; background: #FFFFFF; font-size: 14px; line-height: 1.55; overflow: hidden">
+
+<div style="flex: none; display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid #DFE2E8">
+<a href="MobilAnaSayfa.dc.html" aria-label="Lider Otomarket ana sayfa" style="display: block"><img src="/_blob/7b7d5d45da3637dc4b920358103f0c06" alt="Lider Otomarket" style="height: 40px; width: auto; display: block"></a>
+<a href="MobilAnaSayfa.dc.html" aria-label="Menüyü kapat" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #0A0A0A; color: #0A0A0A">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</a>
+</div>
+
+<nav aria-label="Ana menü" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; padding: 8px 16px 16px">
+<a href="MobilKategori.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 600">Tüm Ürünler
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+<a href="MobilAnaSayfa.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 600">Öne Çıkanlar
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+<a href="MobilKategori.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 600">Yeni Ürünler
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+<a href="MobilKategori.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8; color: #C2410C; text-decoration: none; font-size: 17px; font-weight: 600">Kasım İndirimi
+<span style="display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px; background: #C2410C; color: #FFFFFF; font-size: 10px; font-weight: 600; letter-spacing: 0.06em">%26'YA VARAN</span></a>
+
+<button type="button" onClick="{{toggleKat}}" aria-expanded="{{katOpenText}}" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding: 0; background: none; border: none; border-bottom: 1px solid #DFE2E8; font: inherit; color: #0A0A0A; font-size: 17px; font-weight: 600; text-align: left; cursor: pointer">Kategoriler
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true" style="transform: {{chevron}}"><path d="M6 9l6 6 6-6"></path></svg></button>
+<sc-if value="{{katOpen}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; padding: 4px 0 8px; background: #F4F5F7; border-bottom: 1px solid #DFE2E8">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+<a href="MobilKategori.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; padding: 0 16px; color: #0A0A0A; text-decoration: none; font-size: 15px">{{c.name}}<span style="font-size: 12px; color: #5A5F6B">{{c.count}}</span></a>
+</sc-for>
+</div>
+</sc-if>
+
+<a href="MobilFavoriler.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 600">Favorilerim
+<span style="min-width: 22px; height: 22px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 22px; text-align: center">3</span></a>
+</nav>
+
+<div style="flex: none; display: flex; flex-direction: column; gap: 10px; padding: 16px; background: #EAF0FB">
+<a href="https://www.shopier.com/liderotomarket" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 48px; background: #2757BB; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600">Shopier mağazasına git
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; color: #183673">
+<a href="https://www.instagram.com/liderotomarket" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: #183673; text-decoration: none; font-weight: 500">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>@liderotomarket</a>
+<span>liderotomarket@gmail.com</span>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { katOpen: true };
+  }
+  renderVals() {
+    const cats = [
+      { name: 'İç Aksesuar', count: 3 }, { name: 'Dış Aksesuar', count: 2 }, { name: 'Paspas & Bagaj', count: 2 },
+      { name: 'Aydınlatma', count: 1 }, { name: 'Elektronik', count: 2 }, { name: 'Bakım & Temizlik', count: 2 }
+    ];
+    return {
+      cats: cats,
+      katOpen: this.state.katOpen,
+      katOpenText: this.state.katOpen ? 'true' : 'false',
+      chevron: this.state.katOpen ? 'rotate(180deg)' : 'none',
+      toggleKat: () => this.setState({ katOpen: !this.state.katOpen })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.git
+.idea
+.vscode
+.env
+.env.*
+!.env.example
+bin
+data-ornek
+docs
+*.md

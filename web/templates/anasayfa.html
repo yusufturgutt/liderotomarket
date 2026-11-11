@@ -1,0 +1,110 @@
+{{define "icerik"}}
+<main>
+
+<section class="kampanya" aria-roledescription="carousel" aria-label="Vitrin">
+<div class="vitrin" data-vitrin>
+<div class="vitrin-ray" aria-live="polite">
+{{$adet := len .Page.Slides}}
+{{range $i, $s := .Page.Slides}}
+<div class="vitrin-slayt" role="group" aria-roledescription="slide" aria-label="{{add1 $i}} / {{$adet}}: {{$s.Title}}"{{if $i}} aria-hidden="true"{{end}}>
+<div class="kampanya-ust">
+<div class="kampanya-sol">
+{{with $s.Label}}<span class="hap-beyaz">{{.}}</span>{{end}}
+{{if eq $i 0}}<h1 class="vitrin-baslik">{{$s.Title}}</h1>{{else}}<h2 class="vitrin-baslik">{{$s.Title}}</h2>{{end}}
+{{with $s.Description}}<p>{{.}}</p>{{end}}
+<a class="btn btn-beyaz" href="{{$s.ButtonURL}}"{{if $i}} tabindex="-1"{{end}}>{{$s.Button}} {{ikon "ok" 16}}</a>
+</div>
+<div class="kampanya-sag">
+<span class="rozet {{$s.BadgeClass}} d-only">{{$s.BadgeText}}</span>
+<div class="d-only">
+<div class="buyuk-sayi">{{with $s.Prefix}}<span>{{.}}</span>{{end}}{{$s.BigNumber}}</div>
+<div class="buyuk-not">{{$s.Note1}}{{with $s.Note2}} · {{.}}{{end}}</div>
+</div>
+<div class="buyuk-sayi m-only">{{with $s.Prefix}}<span>{{.}}</span>{{end}}{{$s.BigNumber}}</div>
+<div class="kampanya-sag-yan m-only">
+<span class="rozet {{$s.BadgeClass}}">{{$s.BadgeText}}</span>
+<span class="buyuk-not">{{$s.Note1}}{{with $s.Note2}}<br>{{.}}{{end}}</span>
+</div>
+</div>
+</div>
+</div>
+{{end}}
+</div>
+{{if gt (len .Page.Slides) 1}}
+<button type="button" class="vitrin-ok sol" data-vitrin-onceki aria-label="Önceki">{{ikon "sol" 20}}</button>
+<button type="button" class="vitrin-ok sag" data-vitrin-sonraki aria-label="Sonraki">{{ikon "sag" 20}}</button>
+<div class="vitrin-noktalar d-only">
+{{range $i, $s := .Page.Slides}}<button type="button" data-vitrin-git="{{$i}}" aria-label="{{$s.Title}}"{{if eq $i 0}} aria-current="true"{{end}}><span></span></button>{{end}}
+</div>
+{{end}}
+</div>
+<div class="bilgi-serit">
+<div>{{ikon "canta" 20}}<div><strong>Sipariş Shopier üzerinden</strong><span>Ödeme ve kargo Shopier güvencesiyle.</span></div></div>
+<div>{{ikon "kalp" 20}}<div><strong>Favorilerinize ekleyin</strong><span>Beğendiklerinizi kaydedin, sonra karar verin.</span></div></div>
+<div class="d-only">{{ikon "zarf" 20}}<div><strong>Sorunuz mu var?</strong><span>{{.Site.Email}}</span></div></div>
+</div>
+</section>
+
+{{with .Page.Featured}}
+<section class="bolum" id="one-cikanlar" aria-labelledby="baslik-one">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Seçtiklerimiz</span><h2 id="baslik-one">Öne Çıkanlar</h2></div>
+<a class="bolum-link" href="/urunler"><span class="d-only">Tümünü gör</span><span class="m-only">Tümü →</span><span class="d-only">{{ikon "ok" 16}}</span></a>
+</div>
+{{template "urun-karusel" (karusel "Öne Çıkanlar" .)}}
+</section>
+{{end}}
+
+{{if and .CampaignOn .Page.Sale}}
+<section class="bolum-indirim" id="kasim-indirimi" aria-labelledby="baslik-indirim">
+<div>
+<div class="bolum-bas">
+<div><span class="ust-etiket">Sınırlı süre</span><h2 id="baslik-indirim">{{.CampaignLabel}}</h2></div>
+<a class="bolum-link" href="/urunler?indirim=1"><span class="d-only">Tüm indirimler</span><span class="m-only">Tümü →</span><span class="d-only">{{ikon "ok" 16}}</span></a>
+</div>
+{{template "urun-karusel" (karusel .CampaignLabel .Page.Sale)}}
+</div>
+</section>
+{{end}}
+
+{{with .Page.Newest}}
+<section class="bolum" id="yeni-urunler" aria-labelledby="baslik-yeni">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Mağazaya yeni geldi</span><h2 id="baslik-yeni">Yeni Ürünler</h2></div>
+<a class="bolum-link" href="/urunler?yeni=1"><span class="d-only">Tümünü gör</span><span class="m-only">Tümü →</span><span class="d-only">{{ikon "ok" 16}}</span></a>
+</div>
+{{template "urun-karusel" (karusel "Yeni Ürünler" .)}}
+</section>
+{{end}}
+
+{{with .Cats}}
+<section class="bolum" id="kategoriler" aria-labelledby="baslik-kat">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Shopier mağazasıyla aynı</span><h2 id="baslik-kat">Kategoriler</h2></div>
+</div>
+<div class="kat-izgara">
+{{range .}}
+<a class="kat-kutu" href="{{.URL}}">
+<span class="kat-kutu-ad">{{.Name}}</span>
+<span class="kat-kutu-sayi">{{.Count}} ürün {{ikon "ok" 20}}</span>
+</a>
+{{end}}
+</div>
+</section>
+{{end}}
+
+<section class="insta" aria-label="Bizi takip edin">
+<div>
+<div>
+<h2>Yeni ürünleri ilk siz görün</h2>
+<p>Kampanya ve yeni gelen ürünleri Instagram'da paylaşıyoruz.</p>
+</div>
+<div class="insta-btnlar">
+<a class="btn btn-mavi" href="{{.InstagramURL}}" rel="noopener">{{ikon "instagram" 20}} {{.Site.Instagram}}</a>
+<a class="btn btn-cerceve" href="mailto:{{.Site.Email}}">{{ikon "zarf" 20}} {{.Site.Email}}</a>
+</div>
+</div>
+</section>
+
+</main>
+{{end}}

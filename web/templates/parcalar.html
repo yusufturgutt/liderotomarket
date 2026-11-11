@@ -1,0 +1,233 @@
+{{/* ===================== Masaüstü üst bar ===================== */}}
+{{define "ust-bar"}}
+<header class="ust d-only">
+<div class="ust-ic">
+<a class="ust-logo" href="/" aria-label="{{.Site.Name}} ana sayfa">
+<img src="{{asset "img/logo.png"}}" alt="{{.Site.Name}}" width="88" height="48">
+</a>
+<nav class="menu" aria-label="Ana menü">
+<a class="menu-link" href="/urunler"{{if eq .Nav "urunler"}} aria-current="page"{{end}}>Tüm Ürünler</a>
+<a class="menu-link" href="/#one-cikanlar">Öne Çıkanlar</a>
+<a class="menu-link" href="/urunler?yeni=1"{{if eq .Nav "yeni"}} aria-current="page"{{end}}>Yeni Ürünler</a>
+{{if .Cats}}
+<div class="kat-menu">
+<button type="button" class="menu-link" data-acilir aria-expanded="false" aria-controls="kat-acilir">Kategoriler {{ikon "asagi" 16}}</button>
+<div class="kat-acilir" id="kat-acilir" hidden>
+{{range .Cats}}<a href="{{.URL}}">{{.Name}}<span>{{.Count}}</span></a>{{end}}
+</div>
+</div>
+{{end}}
+{{if .CampaignOn}}<a class="menu-link kampanya-link" href="/urunler?indirim=1"{{if eq .Nav "indirim"}} aria-current="page"{{end}}>{{.CampaignLabel}}</a>{{end}}
+</nav>
+<div class="ust-arac">
+<div class="arama-kutu">
+<form class="arama" role="search" action="/urunler" method="get" data-canli-arama>
+<button type="submit" class="arama-btn" aria-label="Ara">{{ikon "ara" 20}}</button>
+<label for="ara" class="gizli">Ürün ara</label>
+<input id="ara" name="q" type="search" placeholder="Ürün ara…" value="{{.SearchQuery}}" autocomplete="off" enterkeyhint="search" aria-controls="ara-sonuc" aria-autocomplete="list">
+</form>
+<div class="arama-sonuc" id="ara-sonuc" data-arama-sonuc hidden></div>
+</div>
+<a class="ikon-btn" href="/favoriler" aria-label="Favorilerim">
+{{ikon "kalp" 20}}
+<span class="sayac" data-fav-sayac hidden>0</span>
+</a>
+<a class="ikon-btn" href="{{.InstagramURL}}" aria-label="Instagram: {{.Site.Instagram}}" rel="noopener">{{ikon "instagram" 20}}</a>
+</div>
+</div>
+</header>
+{{end}}
+
+{{/* ===================== Mobil üst bar ===================== */}}
+{{define "mobil-ust-bar"}}
+<header class="m-ust m-only">
+<div class="m-ust-satir">
+<div class="m-ust-sol">
+<button type="button" class="ikon-btn" data-katman-ac="mobil-menu" aria-label="Menüyü aç" aria-controls="mobil-menu">{{ikon "menu" 22}}</button>
+<button type="button" class="ikon-btn" data-arama-ac aria-label="Ürün ara" aria-controls="m-arama" aria-expanded="{{if .SearchQuery}}true{{else}}false{{end}}">{{ikon "ara" 20}}</button>
+</div>
+<a class="m-ust-logo" href="/" aria-label="{{.Site.Name}} ana sayfa">
+<img src="{{asset "img/logo.png"}}" alt="{{.Site.Name}}" width="88" height="48">
+</a>
+<div class="m-ust-sag">
+<a class="ikon-btn" href="/favoriler" aria-label="Favorilerim">
+{{ikon "kalp" 20}}
+<span class="sayac" data-fav-sayac hidden>0</span>
+</a>
+</div>
+</div>
+<div class="m-arama" id="m-arama"{{if not .SearchQuery}} hidden{{end}}>
+<form class="arama" role="search" action="/urunler" method="get" data-canli-arama>
+<button type="submit" class="arama-btn" aria-label="Ara">{{ikon "ara" 20}}</button>
+<label for="ara-m" class="gizli">Ürün ara</label>
+<input id="ara-m" name="q" type="search" placeholder="Ürün ara…" value="{{.SearchQuery}}" autocomplete="off" enterkeyhint="search" aria-controls="ara-m-sonuc" aria-autocomplete="list">
+</form>
+<div class="arama-sonuc" id="ara-m-sonuc" data-arama-sonuc hidden></div>
+</div>
+</header>
+{{end}}
+
+{{/* ===================== Mobil menü ===================== */}}
+{{define "mobil-menu"}}
+<div class="m-menu m-only" id="mobil-menu" data-katman hidden role="dialog" aria-modal="true" aria-label="Menü">
+<div class="m-menu-ust">
+<a class="m-ust-logo" href="/" aria-label="{{.Site.Name}} ana sayfa"><img src="{{asset "img/logo.png"}}" alt="{{.Site.Name}}" width="73" height="40"></a>
+<button type="button" class="ikon-btn" data-katman-kapat data-ilk-odak aria-label="Menüyü kapat">{{ikon "kapat" 22}}</button>
+</div>
+<nav aria-label="Ana menü">
+<a class="m-menu-link" href="/urunler">Tüm Ürünler {{ikon "sag" 18}}</a>
+<a class="m-menu-link" href="/#one-cikanlar">Öne Çıkanlar {{ikon "sag" 18}}</a>
+<a class="m-menu-link" href="/urunler?yeni=1">Yeni Ürünler {{ikon "sag" 18}}</a>
+{{if .CampaignOn}}<a class="m-menu-link kampanya-link" href="/urunler?indirim=1">{{.CampaignLabel}}{{with .SaleBadge}} <span class="rozet rozet-indirim">{{.}}</span>{{end}}</a>{{end}}
+{{if .Cats}}
+<button type="button" class="m-menu-link" data-akordiyon aria-expanded="false" aria-controls="m-menu-katlar">Kategoriler {{ikon "asagi" 18}}</button>
+<div class="m-menu-katlar" id="m-menu-katlar" hidden>
+{{range .Cats}}<a href="{{.URL}}">{{.Name}}<span>{{.Count}}</span></a>{{end}}
+</div>
+{{end}}
+<a class="m-menu-link" href="/favoriler">Favorilerim <span class="m-menu-sayac" data-fav-sayac hidden>0</span></a>
+</nav>
+<div class="m-menu-alt">
+<a class="btn btn-mavi" href="{{.Site.ShopierStore}}" rel="noopener">Shopier mağazasına git {{ikon "dis-link" 16}}</a>
+<div class="m-menu-iletisim">
+<a href="{{.InstagramURL}}" rel="noopener">{{ikon "instagram" 18}}{{.Site.Instagram}}</a>
+<span>{{.Site.Email}}</span>
+</div>
+</div>
+</div>
+{{end}}
+
+{{/* ===================== Masaüstü alt bilgi ===================== */}}
+{{define "alt-bilgi"}}
+<footer class="alt d-only{{if .Home}} bitisik{{end}}">
+<div>
+<div class="alt-ust">
+<div class="alt-kol-genis">
+<img src="{{asset "img/logo-beyaz.png"}}" alt="{{.Site.Name}}" width="102" height="56" loading="lazy">
+<p>{{.Site.Description}}</p>
+</div>
+{{if and .Home .Cats}}
+<div class="alt-kol">
+<h3>Kategoriler</h3>
+<div class="alt-liste">{{range .Cats}}<a class="alt-link" href="{{.URL}}">{{.Name}}</a>{{end}}</div>
+</div>
+{{end}}
+<div class="alt-kol">
+<h3>Alışveriş</h3>
+<div class="alt-liste">
+{{if .Home}}
+<a class="alt-link" href="#one-cikanlar">Öne Çıkanlar</a>
+<a class="alt-link" href="#yeni-urunler">Yeni Ürünler</a>
+{{if .CampaignOn}}<a class="alt-link" href="#kasim-indirimi">{{.CampaignLabel}}</a>{{end}}
+{{else}}
+<a class="alt-link" href="/">Ana Sayfa</a>
+<a class="alt-link" href="/urunler">Tüm Ürünler</a>
+{{end}}
+<a class="alt-link" href="/favoriler">Favorilerim</a>
+<a class="alt-link" href="{{.Site.ShopierStore}}" rel="noopener">Shopier mağazası ↗</a>
+</div>
+</div>
+<div class="alt-kol-iletisim">
+<h3>İletişim</h3>
+<div class="alt-liste">
+<a class="alt-link alt-ikonlu" href="mailto:{{.Site.Email}}">{{ikon "zarf" 16}}{{.Site.Email}}</a>
+<a class="alt-link alt-ikonlu" href="{{.InstagramURL}}" rel="noopener">{{ikon "instagram" 16}}{{.Site.Instagram}}</a>
+</div>
+</div>
+</div>
+<div class="alt-alt"><span>© {{.Year}} {{.Site.Name}}</span><span>Siparişler Shopier altyapısıyla alınır.</span></div>
+</div>
+</footer>
+{{end}}
+
+{{/* ===================== Mobil alt bilgi ===================== */}}
+{{define "mobil-alt-bilgi"}}
+<footer class="m-alt m-only{{if .Home}} bitisik{{end}}">
+<img src="{{asset "img/logo-beyaz.png"}}" alt="{{.Site.Name}}" width="88" height="48" loading="lazy">
+<p>{{.Site.Description}}</p>
+<div class="m-alt-izgara">
+<div>
+<h3>Alışveriş</h3>
+<div class="m-alt-liste">
+<a href="/">Ana Sayfa</a>
+<a href="/urunler">Tüm Ürünler</a>
+<a href="/favoriler">Favorilerim</a>
+</div>
+</div>
+<div>
+<h3>İletişim</h3>
+<div class="m-alt-liste">
+<a class="alt-ikonlu" href="mailto:{{.Site.Email}}">{{ikon "zarf" 16}}{{.Site.Email}}</a>
+<a class="alt-ikonlu" href="{{.InstagramURL}}" rel="noopener">{{ikon "instagram" 16}}{{.Site.Instagram}}</a>
+</div>
+</div>
+</div>
+<div class="m-alt-son"><span>© {{.Year}} {{.Site.Name}}</span><span>Siparişler Shopier altyapısıyla alınır.</span></div>
+</footer>
+{{end}}
+
+{{/* ===================== Kayan ürün şeridi ===================== */}}
+{{define "urun-karusel"}}
+<div class="karusel" data-karusel data-sure="4000">
+<button type="button" class="karusel-ok sol" data-karusel-onceki aria-label="Önceki ürünler" hidden>{{ikon "sol" 20}}</button>
+<div class="karusel-ray" role="region" aria-label="{{.Label}}" tabindex="0">
+{{range .Items}}<div class="karusel-oge">{{template "kart" .}}</div>{{end}}
+</div>
+<button type="button" class="karusel-ok sag" data-karusel-sonraki aria-label="Sonraki ürünler" hidden>{{ikon "sag" 20}}</button>
+</div>
+{{end}}
+
+{{/* ===================== Ürün kartı ===================== */}}
+{{define "kart"}}
+<article class="kart{{if not .InStock}} tukendi{{end}}">
+<a class="kart-gorsel" href="{{.URL}}" aria-label="{{.Name}}" tabindex="-1">
+{{if .Img}}<img src="{{.Img}}" alt="" loading="lazy" decoding="async">{{else}}<span class="d-only">{{ikon "gorsel" 56}}</span><span class="m-only">{{ikon "gorsel" 40}}</span><span class="d-only">Ürün görseli</span>{{end}}
+</a>
+<div class="rozetler">
+{{if not .InStock}}<span class="rozet rozet-tukendi">Tükendi</span>{{end}}
+{{if .IsNew}}<span class="rozet rozet-yeni">Yeni</span>{{end}}
+{{if .HasOld}}<span class="rozet rozet-indirim">%{{.Pct}}<span class="d-only">&nbsp;İndirim</span></span>{{end}}
+</div>
+<button type="button" class="fav-btn" data-fav="{{.ID}}" data-ad="{{.Name}}" aria-pressed="false" aria-label="{{.Name}} favorilere ekle">{{ikon "kalp" 20}}</button>
+<div class="kart-govde">
+<span class="etiket">{{.Category}}</span>
+<a class="kart-ad" href="{{.URL}}">{{.Name}}</a>
+<div class="fiyat-satir">
+<span class="fiyat{{if .HasOld}} indirimli{{end}}">{{.Price}}</span>
+{{if .HasOld}}<span class="eski-fiyat"><span class="gizli">Eski fiyat: </span>{{.Old}}</span>{{end}}
+</div>
+{{if .InStock}}
+<a class="btn btn-mavi" href="{{.ShopierURL}}" rel="noopener">Shopier'de Al <span class="d-only">{{ikon "dis-link" 16}}</span><span class="m-only">{{ikon "dis-link" 14}}</span></a>
+{{else}}
+<span class="btn btn-pasif" aria-disabled="true">Tükendi</span>
+{{end}}
+</div>
+</article>
+{{end}}
+
+{{/* ===================== Favori satırı ===================== */}}
+{{define "favori-satir"}}
+<article class="fav-satir" data-id="{{.ID}}">
+<a class="fav-gorsel" href="{{.URL}}" aria-label="{{.Name}}" tabindex="-1">
+{{if .Img}}<img src="{{.Img}}" alt="" loading="lazy" decoding="async">{{else}}{{ikon "gorsel" 40}}{{end}}
+</a>
+<div class="fav-bilgi">
+<span class="etiket">{{.Category}}</span>
+<a class="fav-ad" href="{{.URL}}">{{.Name}}</a>
+<div class="fiyat-satir">
+<span class="fiyat{{if .HasOld}} indirimli{{end}}">{{.Price}}</span>
+{{if .HasOld}}<span class="eski-fiyat">{{.Old}}</span><span class="rozet rozet-indirim d-only">%{{.Pct}} İndirim</span>{{end}}
+{{if not .InStock}}<span class="rozet rozet-tukendi">Tükendi</span>{{end}}
+</div>
+{{if .HasOld}}<span class="rozet rozet-indirim m-only">%{{.Pct}} İndirim</span>{{end}}
+</div>
+<div class="fav-butonlar">
+<button type="button" class="fav-kaldir" data-fav-kaldir="{{.ID}}" aria-label="{{.Name}} favorilerden kaldır"><span class="d-only">{{ikon "kapat" 16}}</span><span class="m-only">{{ikon "kapat" 14}}</span>Kaldır</button>
+{{if .InStock}}
+<a class="btn btn-mavi" href="{{.ShopierURL}}" rel="noopener">Shopier'de Al <span class="d-only">{{ikon "dis-link" 16}}</span><span class="m-only">{{ikon "dis-link" 14}}</span></a>
+{{else}}
+<span class="btn btn-pasif" aria-disabled="true">Tükendi</span>
+{{end}}
+</div>
+</article>
+{{end}}

@@ -1,0 +1,14 @@
+# Gizli anahtarlar
+.env
+
+# Shopier'den çekilen veriler (make guncelle ile yeniden üretilir)
+data/
+
+# Derleme çıktıları
+/bin/
+/liderotomarket
+
+# IDE
+.idea/
+.vscode/
+data-ornek/

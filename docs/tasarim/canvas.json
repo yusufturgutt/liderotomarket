@@ -1,0 +1,30 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-10T20:45:00Z" },
+  "title": "Lider Otomarket — Web Sitesi Tasarımı",
+  "launch": { "view": "canvas" },
+  "pages": [
+    { "id": "masaustu", "name": "Masaüstü" },
+    { "id": "mobil", "name": "Mobil" }
+  ],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 3900, "title": "Ana Sayfa", "expand": "fill", "is_interactive": true },
+    "Kategori.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 2500, "title": "Tüm Ürünler · Kategori", "expand": "fill", "is_interactive": true },
+    "Urun.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 2150, "title": "Ürün Detay", "expand": "fill", "is_interactive": true },
+    "Favoriler.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1600, "title": "Favorilerim", "expand": "fill", "is_interactive": true },
+    "Bilesenler.dc.html": { "x": 6080, "y": 0, "w": 1440, "h": 2000, "title": "Renkler & Bileşenler" },
+    "MobilAnaSayfa.dc.html": { "x": 0, "y": 0, "w": 390, "h": 5400, "title": "Mobil · Ana Sayfa", "expand": "fill", "is_interactive": true, "page": "mobil" },
+    "MobilMenu.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "Mobil · Menü açık", "is_interactive": true, "page": "mobil" },
+    "MobilKategori.dc.html": { "x": 940, "y": 0, "w": 390, "h": 3400, "title": "Mobil · Tüm Ürünler", "expand": "fill", "is_interactive": true, "page": "mobil" },
+    "MobilUrun.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 2900, "title": "Mobil · Ürün Detay", "expand": "fill", "is_interactive": true, "page": "mobil" },
+    "MobilFavoriler.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 2300, "title": "Mobil · Favorilerim", "expand": "fill", "is_interactive": true, "page": "mobil" }
+  },
+  "order": ["Main.dc.html", "Kategori.dc.html", "Urun.dc.html", "Favoriler.dc.html", "Bilesenler.dc.html", "MobilAnaSayfa.dc.html", "MobilMenu.dc.html", "MobilKategori.dc.html", "MobilUrun.dc.html", "MobilFavoriler.dc.html"],
+  "notes": {
+    "baslik": { "kind": "title1", "x": 0, "y": -320, "maxW": 7520, "text": "Lider Otomarket · Masaüstü Site Tasarımı" },
+    "mobilBaslik": { "kind": "title1", "x": 0, "y": -320, "maxW": 2270, "text": "Lider Otomarket · Mobil Site Tasarımı", "page": "mobil" }
+  },
+  "designSystems": [
+    { "title": "Lider Otomarket", "namespace": "liderotomarket", "artifact": "https://claude.ai/artifact/DNLXqnESmHCD1GDNN1yCC7", "version": null, "copiedAt": "2026-11-10T20:45:00Z" }
+  ]
+}

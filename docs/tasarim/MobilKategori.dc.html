@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Lider Otomarket · Mobil Tüm Ürünler</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2757BB}a:hover{color:#1F4699}
+.gizli{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.yatay{scrollbar-width:none}.yatay::-webkit-scrollbar{display:none}
+.btn-mavi:active{background:#1F4699!important}
+:focus-visible{outline:2px solid #2757BB;outline-offset:2px}
+</style>
+</helmet>
+<div style="font-family: Poppins, 'Segoe UI', system-ui, sans-serif; color: #0A0A0A; background: #FFFFFF; font-size: 14px; line-height: 1.55">
+
+<!-- Mobil üst bar -->
+<header style="position: sticky; top: 0; z-index: 20; background: #FFFFFF; border-bottom: 1px solid #DFE2E8">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px">
+<a href="MobilMenu.dc.html" aria-label="Menüyü aç" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #DFE2E8; color: #0A0A0A">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</a>
+<a href="MobilAnaSayfa.dc.html" aria-label="Lider Otomarket ana sayfa" style="display: block">
+<img src="/_blob/7b7d5d45da3637dc4b920358103f0c06" alt="Lider Otomarket" style="height: 40px; width: auto; display: block">
+</a>
+<a href="MobilFavoriler.dc.html" aria-label="Favorilerim" style="position: relative; width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #DFE2E8; color: #0A0A0A">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"></path></svg>
+<span style="position: absolute; top: -8px; right: -8px; min-width: 20px; height: 20px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: #2757BB; color: #FFFFFF; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">{{favCount}}</span>
+</a>
+</div>
+<div style="padding: 0 16px 10px">
+<form role="search" onSubmit="{{noSubmit}}" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; box-sizing: border-box; background: #F4F5F7; border: 1px solid #8A909C">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A5F6B" stroke-width="1.75" stroke-linecap="square" aria-hidden="true" style="flex: none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<label for="ara" class="gizli">Ürün ara</label>
+<input id="ara" type="search" placeholder="Ürün ara…" value="{{q}}" onInput="{{setQ}}" style="border: none; outline: none; background: transparent; font: inherit; font-size: 16px; color: #0A0A0A; width: 100%; min-width: 0">
+</form>
+</div>
+</header>
+
+<main style="padding: 16px 16px 0">
+
+<nav aria-label="Konum" style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: #5A5F6B">
+<a href="MobilAnaSayfa.dc.html" style="color: #5A5F6B; text-decoration: none">Ana Sayfa</a><span aria-hidden="true">/</span><span style="color: #0A0A0A; font-weight: 500">{{title}}</span>
+</nav>
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-top: 8px; padding-bottom: 12px; border-bottom: 2px solid #0A0A0A">
+<h1 style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.3px">{{title}}</h1>
+<span style="flex: none; font-size: 13px; color: #5A5F6B">{{resultText}}</span>
+</div>
+
+<!-- Kategori çipleri -->
+<div class="yatay" role="group" aria-label="Kategoriler" style="display: flex; gap: 8px; overflow-x: auto; margin: 16px -16px 0; padding: 0 16px">
+<sc-for list="{{catList}}" as="c" hint-placeholder-count="7">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.selText}}" style="flex: none; height: 40px; padding: 0 14px; border: 1px solid {{c.border}}; background: {{c.bg}}; color: {{c.fg}}; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap">{{c.name}} <span style="opacity: 0.7">{{c.count}}</span></button>
+</sc-for>
+</div>
+
+<!-- Araç çubuğu -->
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px">
+<button type="button" onClick="{{openSheet}}" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; border: 1px solid #0A0A0A; background: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; color: #0A0A0A; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtrele{{filterBadge}}</button>
+<label style="position: relative; display: flex">
+<span class="gizli">Sırala</span>
+<select onChange="{{setSort}}" value="{{sort}}" style="width: 100%; height: 44px; padding: 0 12px; border: 1px solid #8A909C; border-radius: 0; background: #FFFFFF; font: inherit; font-size: 14px; color: #0A0A0A">
+<option value="onerilen">Önerilen</option>
+<option value="artan">Fiyat: artan</option>
+<option value="azalan">Fiyat: azalan</option>
+<option value="indirim">İndirim oranı</option>
+</select>
+</label>
+</div>
+
+<sc-if value="{{hasChips}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">
+<sc-for list="{{activeChips}}" as="f" hint-placeholder-count="1">
+<button type="button" onClick="{{f.clear}}" aria-label="{{f.label}} filtresini kaldır" style="display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; background: #EAF0FB; border: none; font: inherit; font-size: 13px; color: #183673; cursor: pointer">{{f.label}}
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<div style="margin-top: 20px; padding: 32px 20px; border: 1px dashed #8A909C; text-align: center; color: #5A5F6B">
+<p style="margin: 0 0 16px">Bu filtrelerle eşleşen ürün yok.</p>
+<button type="button" onClick="{{clearAll}}" style="height: 44px; padding: 0 24px; background: #0A0A0A; color: #FFFFFF; border: none; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Filtreleri temizle</button>
+</div>
+</sc-if>
+
+<!-- Ürünler -->
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px">
+<sc-for list="{{items}}" as="p" hint-placeholder-count="8">
+<article style="position: relative; display: flex; flex-direction: column; min-width: 0; background: #FFFFFF; border: 1px solid #DFE2E8">
+<a href="MobilUrun.dc.html" aria-label="{{p.name}}" style="display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1; background: #F4F5F7">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8A909C" stroke-width="1" aria-hidden="true"><rect x="3" y="4" width="18" height="16"></rect><circle cx="9" cy="10" r="2"></circle><path d="M3 18l6-5 4 3 3-2 5 4"></path></svg>
+</a>
+<div style="position: absolute; top: 8px; left: 8px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<sc-if value="{{p.isNew}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; background: #0A0A0A; color: #FFFFFF; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase">Yeni</span></sc-if>
+<sc-if value="{{p.hasOld}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; background: #C2410C; color: #FFFFFF; font-size: 10px; font-weight: 600; letter-spacing: 0.06em">{{p.pctText}}</span></sc-if>
+</div>
+<button type="button" onClick="{{p.toggle}}" aria-label="{{p.favLabel}}" aria-pressed="{{p.favText}}" style="position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: #FFFFFF; border: 1px solid {{p.favBorder}}; color: {{p.favColor}}; cursor: pointer; padding: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="{{p.favFill}}" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"></path></svg>
+</button>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 10px">
+<span style="font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5A5F6B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.category}}</span>
+<a href="MobilUrun.dc.html" style="min-height: 36px; color: #0A0A0A; text-decoration: none; font-size: 13px; line-height: 18px; font-weight: 600">{{p.name}}</a>
+<div style="margin-top: auto; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 6px">
+<span style="font-size: 16px; line-height: 20px; font-weight: 700; color: {{p.priceColor}}">{{p.priceText}}</span>
+<sc-if value="{{p.hasOld}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; color: #5A5F6B; text-decoration: line-through">{{p.oldText}}</span></sc-if>
+</div>
+<a class="btn-mavi" href="https://www.shopier.com/liderotomarket" style="margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; height: 44px; background: #2757BB; color: #FFFFFF; text-decoration: none; font-size: 13px; font-weight: 600">Shopier'de Al
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
+</div>
+</article>
+</sc-for>
+</div>
+</main>
+
+<!-- Footer -->
+<footer style="margin-top: 40px; background: #0A0A0A; color: #FFFFFF; padding: 32px 16px 20px">
+<img src="/_blob/1dd632f796f48aff6fea4b29bd211b71" alt="Lider Otomarket" style="height: 48px; width: auto; display: block">
+<p style="margin: 14px 0 0; color: #B4BAC6; font-size: 13px; line-height: 20px">Otomobil aksesuar ve parçaları. Ürünleri burada inceleyin, siparişinizi Shopier mağazamızdan verin.</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 28px; padding-bottom: 24px; border-bottom: 1px solid #2B2B2B">
+<div>
+<h3 style="margin: 0 0 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Alışveriş</h3>
+<div style="display: flex; flex-direction: column">
+<a href="MobilAnaSayfa.dc.html" style="display: flex; align-items: center; min-height: 36px; color: #B4BAC6; text-decoration: none; font-size: 13px">Ana Sayfa</a>
+<a href="MobilFavoriler.dc.html" style="display: flex; align-items: center; min-height: 36px; color: #B4BAC6; text-decoration: none; font-size: 13px">Favorilerim</a>
+<a href="https://www.shopier.com/liderotomarket" style="display: flex; align-items: center; min-height: 36px; color: #B4BAC6; text-decoration: none; font-size: 13px">Shopier mağazası ↗</a>
+</div>
+</div>
+<div>
+<h3 style="margin: 0 0 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">İletişim</h3>
+<div style="display: flex; flex-direction: column; font-size: 13px; color: #B4BAC6">
+<span style="display: flex; align-items: center; min-height: 36px; word-break: break-all">liderotomarket@gmail.com</span>
+<a href="https://www.instagram.com/liderotomarket" style="display: flex; align-items: center; min-height: 36px; color: #B4BAC6; text-decoration: none">@liderotomarket</a>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px; color: #B4BAC6; font-size: 12px">
+<span>© 2026 Lider Otomarket</span><span>Siparişler Shopier altyapısıyla alınır.</span>
+</div>
+</footer>
+
+<!-- Filtre paneli -->
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{false}}">
+<div style="position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; justify-content: flex-end">
+<button type="button" onClick="{{closeSheet}}" aria-label="Filtre panelini kapat" style="flex: 1; border: none; padding: 0; background: rgba(10,10,10,0.4); cursor: pointer"></button>
+<div role="dialog" aria-label="Filtrele" style="background: #FFFFFF; padding: 8px 16px 20px; box-shadow: 0 -12px 32px rgba(10,10,10,0.16)">
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid #DFE2E8">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Filtrele</h2>
+<button type="button" onClick="{{closeSheet}}" aria-label="Kapat" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: none; border: 1px solid #DFE2E8; cursor: pointer; padding: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="display: flex; flex-direction: column; padding: 8px 0">
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; font-size: 15px; cursor: pointer; border-bottom: 1px solid #DFE2E8"><input type="checkbox" checked="{{onlySale}}" onChange="{{toggleSale}}" style="width: 20px; height: 20px; margin: 0; accent-color: #C2410C">Sadece indirimli ürünler</label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; font-size: 15px; cursor: pointer; border-bottom: 1px solid #DFE2E8"><input type="checkbox" checked="{{onlyNew}}" onChange="{{toggleNew}}" style="width: 20px; height: 20px; margin: 0; accent-color: #2757BB">Sadece yeni ürünler</label>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px">
+<button type="button" onClick="{{clearAll}}" style="height: 48px; border: 1px solid #0A0A0A; background: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; color: #0A0A0A; cursor: pointer">Temizle</button>
+<button type="button" onClick="{{closeSheet}}" style="height: 48px; border: none; background: #2757BB; font: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer">{{showText}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3400}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { favs: { 2: true, 4: true, 7: true }, cat: 'Tümü', onlySale: false, onlyNew: false, q: '', sort: 'onerilen', sheetOpen: false };
+  }
+  tl(n) {
+    return n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TL';
+  }
+  pct(p) {
+    return p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+  }
+  decorate(list) {
+    const favs = this.state.favs;
+    return list.map((p) => {
+      const fav = !!favs[p.id];
+      return Object.assign({}, p, {
+        hasOld: !!p.old,
+        isNew: !!p.isNew,
+        pctText: '%' + this.pct(p),
+        priceText: this.tl(p.price),
+        oldText: p.old ? this.tl(p.old) : '',
+        priceColor: p.old ? '#C2410C' : '#0A0A0A',
+        favFill: fav ? 'currentColor' : 'none',
+        favColor: fav ? '#C2410C' : '#0A0A0A',
+        favBorder: fav ? '#C2410C' : '#DFE2E8',
+        favText: fav ? 'true' : 'false',
+        favLabel: fav ? p.name + ' favorilerden çıkar' : p.name + ' favorilere ekle',
+        toggle: () => {
+          const next = Object.assign({}, this.state.favs);
+          if (next[p.id]) delete next[p.id]; else next[p.id] = true;
+          this.setState({ favs: next });
+        }
+      });
+    });
+  }
+  renderVals() {
+    // Örnek ürünler — Shopier bağlantısı kurulunca mağazadaki ürünlerle değişecek.
+    const products = [
+      { id: 1, name: 'Deri Direksiyon Kılıfı – Siyah', category: 'İç Aksesuar', price: 349.9 },
+      { id: 2, name: '3D Havuzlu Paspas Seti', category: 'Paspas & Bagaj', price: 899, old: 1199 },
+      { id: 3, name: 'Manyetik Telefon Tutucu – Havalandırma', category: 'Elektronik', price: 249.9, isNew: true },
+      { id: 4, name: 'LED Ayak Altı Aydınlatma Kiti', category: 'Aydınlatma', price: 429.9, isNew: true },
+      { id: 5, name: 'Katlanır Bagaj Organizeri', category: 'Paspas & Bagaj', price: 379.9, old: 499.9 },
+      { id: 6, name: 'Hızlı Araç Şarj Cihazı 2×USB-C', category: 'Elektronik', price: 299.9, isNew: true },
+      { id: 7, name: 'Seramik Kaplama Sprey 500 ml', category: 'Bakım & Temizlik', price: 319.9, old: 429.9 },
+      { id: 8, name: 'Mikrofiber Kurulama Havlusu', category: 'Bakım & Temizlik', price: 149.9 },
+      { id: 9, name: 'Kapı Eşik Koruma Bandı', category: 'Dış Aksesuar', price: 189.9, isNew: true },
+      { id: 10, name: "Cam Rüzgarlığı 4'lü Set", category: 'Dış Aksesuar', price: 749.9 },
+      { id: 11, name: 'Ortopedik Koltuk Minderi', category: 'İç Aksesuar', price: 459.9, old: 599.9 },
+      { id: 12, name: 'Araç İçi Çöp Kutusu', category: 'İç Aksesuar', price: 129.9 }
+    ];
+    const s = this.state;
+    const catNames = ['İç Aksesuar', 'Dış Aksesuar', 'Paspas & Bagaj', 'Aydınlatma', 'Elektronik', 'Bakım & Temizlik'];
+    const count = (name) => name === 'Tümü' ? products.length : products.filter((p) => p.category === name).length;
+    const catList = ['Tümü'].concat(catNames).map((name) => {
+      const sel = s.cat === name;
+      return {
+        name: name, count: count(name), selText: sel ? 'true' : 'false',
+        bg: sel ? '#0A0A0A' : '#FFFFFF', fg: sel ? '#FFFFFF' : '#0A0A0A', border: sel ? '#0A0A0A' : '#DFE2E8',
+        pick: () => this.setState({ cat: name })
+      };
+    });
+    const q = s.q.trim().toLocaleLowerCase('tr-TR');
+    let list = products.filter((p) =>
+      (s.cat === 'Tümü' || p.category === s.cat) &&
+      (!s.onlySale || p.old) &&
+      (!s.onlyNew || p.isNew) &&
+      (!q || p.name.toLocaleLowerCase('tr-TR').indexOf(q) > -1 || p.category.toLocaleLowerCase('tr-TR').indexOf(q) > -1)
+    );
+    if (s.sort === 'artan') list = list.slice().sort((a, b) => a.price - b.price);
+    if (s.sort === 'azalan') list = list.slice().sort((a, b) => b.price - a.price);
+    if (s.sort === 'indirim') list = list.slice().sort((a, b) => this.pct(b) - this.pct(a));
+    const activeChips = [];
+    if (s.onlySale) activeChips.push({ label: 'İndirimli', clear: () => this.setState({ onlySale: false }) });
+    if (s.onlyNew) activeChips.push({ label: 'Yeni', clear: () => this.setState({ onlyNew: false }) });
+    if (q) activeChips.push({ label: '“' + s.q.trim() + '”', clear: () => this.setState({ q: '' }) });
+    const nFilters = (s.onlySale ? 1 : 0) + (s.onlyNew ? 1 : 0);
+    let title = s.cat === 'Tümü' ? 'Tüm Ürünler' : s.cat;
+    if (s.onlySale && s.cat === 'Tümü') title = 'Kasım İndirimi';
+    if (s.onlyNew && !s.onlySale && s.cat === 'Tümü') title = 'Yeni Ürünler';
+    return {
+      title: title,
+      resultText: list.length + ' ürün',
+      catList: catList,
+      activeChips: activeChips,
+      hasChips: activeChips.length > 0,
+      items: this.decorate(list),
+      empty: list.length === 0,
+      filterBadge: nFilters ? ' (' + nFilters + ')' : '',
+      showText: list.length + ' ürünü göster',
+      onlySale: s.onlySale,
+      onlyNew: s.onlyNew,
+      q: s.q,
+      sort: s.sort,
+      sheetOpen: s.sheetOpen,
+      favCount: Object.keys(s.favs).length,
+      openSheet: () => this.setState({ sheetOpen: true }),
+      closeSheet: () => this.setState({ sheetOpen: false }),
+      toggleSale: () => this.setState({ onlySale: !this.state.onlySale }),
+      toggleNew: () => this.setState({ onlyNew: !this.state.onlyNew }),
+      setQ: (e) => this.setState({ q: e.target.value }),
+      setSort: (e) => this.setState({ sort: e.target.value }),
+      clearAll: () => this.setState({ cat: 'Tümü', onlySale: false, onlyNew: false, q: '' }),
+      noSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{{define "icerik"}}
+{{$p := .Page}}{{$c := $p.Card}}
+<main class="icerik urun-sayfa">
+
+<nav class="yol" aria-label="Konum">
+<a href="/">Ana Sayfa</a><span aria-hidden="true">/</span>
+{{with $p.Category}}<a href="{{.URL}}">{{.Name}}</a>{{else}}<a href="/urunler">Tüm Ürünler</a>{{end}}<span aria-hidden="true">/</span>
+<span aria-current="page">{{$c.Name}}</span>
+</nav>
+
+<div class="urun-ust">
+
+<div class="galeri" data-galeri="{{$p.GalleryJSON}}" data-ad="{{$c.Name}}">
+<div class="galeri-ana">
+{{if $p.Images}}
+<img src="{{(index $p.Images 0).Full}}" alt="{{$c.Name}}" data-galeri-gorsel fetchpriority="high">
+{{else}}
+<span class="d-only">{{ikon "gorsel" 96}}</span><span class="m-only">{{ikon "gorsel" 72}}</span>
+Ürün görseli
+{{end}}
+<div class="rozetler">
+{{if not $c.InStock}}<span class="rozet rozet-tukendi">Tükendi</span>{{end}}
+{{if $c.IsNew}}<span class="rozet rozet-yeni">Yeni</span>{{end}}
+{{if $c.HasOld}}<span class="rozet rozet-indirim">%{{$c.Pct}} İndirim</span>{{end}}
+</div>
+{{if gt (len $p.Images) 1}}
+<button type="button" class="galeri-ok sol m-only" data-galeri-onceki aria-label="Önceki görsel">{{ikon "sol" 20}}</button>
+<button type="button" class="galeri-ok sag m-only" data-galeri-sonraki aria-label="Sonraki görsel">{{ikon "sag" 20}}</button>
+{{end}}
+</div>
+{{if gt (len $p.Images) 1}}
+<div class="kucukler d-only {{$p.ThumbClasses}}">
+{{range $i, $im := $p.Images}}
+<button type="button" data-gorsel-sec="{{$i}}" aria-label="Görsel {{add1 $i}}" aria-pressed="{{if eq $i 0}}true{{else}}false{{end}}"><img src="{{$im.Thumb}}" alt="" loading="lazy"></button>
+{{end}}
+</div>
+<div class="noktalar m-only">
+{{range $i, $im := $p.Images}}
+<button type="button" data-gorsel-sec="{{$i}}" aria-label="Görsel {{add1 $i}}" aria-pressed="{{if eq $i 0}}true{{else}}false{{end}}"><span></span></button>
+{{end}}
+</div>
+{{end}}
+</div>
+
+<div class="urun-bilgi">
+<div>
+{{with $p.Category}}<a class="urun-kat" href="{{.URL}}">{{.Name}}</a>{{end}}
+<h1>{{$c.Name}}</h1>
+</div>
+<div class="fiyat-blok">
+<span class="fiyat-buyuk{{if $c.HasOld}} indirimli{{end}}">{{$c.Price}}</span>
+{{if $c.HasOld}}<span class="eski-fiyat"><span class="gizli">Eski fiyat: </span>{{$c.Old}}</span>{{end}}
+{{with $p.Savings}}<span class="hap-tasarruf">{{.}}</span>{{end}}
+</div>
+{{with $p.Description}}<div class="aciklama">{{.}}</div>{{end}}
+
+<dl class="ozellik">
+{{with $p.Category}}<dt>Kategori</dt><dd><a href="{{.URL}}">{{.Name}}</a></dd>{{end}}
+<dt>Stok durumu</dt><dd{{if not $c.InStock}} class="stok-yok"{{end}}>{{$p.StockText}}</dd>
+<dt>Kargo</dt><dd>{{$p.Shipping}}</dd>
+<dt>Ürün kodu</dt><dd>{{$c.ID}}</dd>
+</dl>
+
+<div class="urun-butonlar d-only">
+{{if $c.InStock}}
+<a class="btn btn-mavi" href="{{$c.ShopierURL}}" rel="noopener">Shopier'de Al {{ikon "dis-link" 18}}</a>
+{{else}}
+<span class="btn btn-pasif" aria-disabled="true">Tükendi</span>
+{{end}}
+<button type="button" class="fav-buyuk" data-fav="{{$c.ID}}" data-ad="{{$c.Name}}" data-etiketli aria-pressed="false">{{ikon "kalp" 20}}<span data-fav-metin>Favorilere ekle</span></button>
+</div>
+
+<div class="siparis-nasil">
+<h2>Nasıl sipariş verilir?</h2>
+<ol>
+<li><span>1</span>"Shopier'de Al" butonuna basın.</li>
+<li><span>2</span>Açılan Shopier sayfasında adet ve adres bilgilerinizi girin.</li>
+<li><span>3</span>Ödemeyi Shopier güvencesiyle tamamlayın.</li>
+</ol>
+</div>
+<p class="soru">Sorunuz mu var? {{.Site.Email}} · <a href="{{.InstagramURL}}" rel="noopener">{{.Site.Instagram}}</a></p>
+</div>
+</div>
+
+{{with $p.Similar}}
+<section class="benzer" aria-labelledby="baslik-benzer">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Bunlara da bakın</span><h2 id="baslik-benzer">Benzer Ürünler</h2></div>
+<a class="bolum-link" href="{{with $p.Category}}{{.URL}}{{else}}/urunler{{end}}"><span class="d-only">Tüm ürünler</span><span class="m-only">Tümü →</span><span class="d-only">{{ikon "ok" 16}}</span></a>
+</div>
+{{template "urun-karusel" (karusel "Benzer Ürünler" .)}}
+</section>
+{{end}}
+</main>
+{{end}}
+
+{{define "sayfa-sonu"}}
+{{$c := .Page.Card}}
+<div class="m-alim m-only">
+<div class="m-alim-fiyat">
+<strong{{if $c.HasOld}} class="indirimli"{{end}}>{{$c.Price}}</strong>
+{{if $c.HasOld}}<span>{{$c.Old}}</span>{{end}}
+</div>
+<button type="button" class="fav-kare" data-fav="{{$c.ID}}" data-ad="{{$c.Name}}" data-etiketli aria-pressed="false" aria-label="Favorilere ekle">{{ikon "kalp" 22}}</button>
+{{if $c.InStock}}
+<a class="btn btn-mavi" href="{{$c.ShopierURL}}" rel="noopener">Shopier'de Al {{ikon "dis-link" 16}}</a>
+{{else}}
+<span class="btn btn-pasif" aria-disabled="true">Tükendi</span>
+{{end}}
+</div>
+{{end}}

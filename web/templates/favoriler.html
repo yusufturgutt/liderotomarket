@@ -1,0 +1,53 @@
+{{define "icerik"}}
+<main class="icerik">
+
+<nav class="yol" aria-label="Konum">
+<a href="/">Ana Sayfa</a><span aria-hidden="true">/</span><span aria-current="page">Favorilerim</span>
+</nav>
+
+<div class="sayfa-bas">
+<div>
+<span class="ust-etiket">Kaydettikleriniz</span>
+<h1>Favorilerim</h1>
+</div>
+<span class="sayfa-bas-sayi" data-favori-sayi aria-live="polite"></span>
+</div>
+
+<div class="favori-duzen">
+<section class="favori-liste" aria-label="Favori ürünler">
+<div class="favori-bos" data-favori-bos hidden>
+{{ikon "kalp" 40}}
+<p>Henüz favori ürününüz yok. Ürün kartlarındaki kalbe basarak ekleyebilirsiniz.</p>
+<a class="btn btn-mavi" href="/urunler">Ürünlere göz atın</a>
+</div>
+<noscript><div class="bos"><p>Favoriler için tarayıcınızda JavaScript açık olmalıdır.</p></div></noscript>
+<div class="favori-satirlar" data-favori-liste></div>
+<div class="favori-m-bilgi m-only">
+<h2>Favoriler nasıl çalışır?</h2>
+<p>Favorileriniz bu tarayıcıda saklanır, üyelik gerekmez. Satın almak için "Shopier'de Al" butonuna basın; sipariş ve ödeme Shopier üzerinden tamamlanır.</p>
+</div>
+</section>
+
+<aside class="favori-yan d-only" aria-label="Bilgi">
+<div>
+<h2>Favoriler nasıl çalışır?</h2>
+<p>Favorileriniz bu tarayıcıda saklanır, üyelik gerekmez. Satın almak için ürünün "Shopier'de Al" butonuna basın; sipariş ve ödeme Shopier üzerinden tamamlanır.</p>
+</div>
+<div class="favori-iletisim">
+<h2>Sorunuz mu var?</h2>
+<span>{{.Site.Email}}</span>
+<a href="{{.InstagramURL}}" rel="noopener">Instagram: {{.Site.Instagram}}</a>
+</div>
+</aside>
+</div>
+
+{{with .Page.Suggest}}
+<section class="oneriler" aria-labelledby="baslik-oneri">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Seçtiklerimiz</span><h2 id="baslik-oneri">Bunlar da ilginizi çekebilir</h2></div>
+</div>
+{{template "urun-karusel" (karusel "Bunlar da ilginizi çekebilir" .)}}
+</section>
+{{end}}
+</main>
+{{end}}

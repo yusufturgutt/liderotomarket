@@ -1,0 +1,19 @@
+{{define "icerik"}}
+<main class="icerik">
+<div class="bulunamadi">
+<span class="ust-etiket">404</span>
+<h1>Aradığınız sayfa bulunamadı</h1>
+<p>Ürün Shopier mağazasından kaldırılmış ya da adres değişmiş olabilir. Tüm ürünlere göz atabilir veya arama yapabilirsiniz.</p>
+<a class="btn btn-mavi" href="/urunler">Tüm ürünleri gör</a>
+</div>
+
+{{with .Page.Suggest}}
+<section class="oneriler" aria-labelledby="baslik-oneri">
+<div class="bolum-bas">
+<div><span class="ust-etiket">Seçtiklerimiz</span><h2 id="baslik-oneri">Bunlar da ilginizi çekebilir</h2></div>
+</div>
+{{template "urun-karusel" (karusel "Bunlar da ilginizi çekebilir" .)}}
+</section>
+{{end}}
+</main>
+{{end}}

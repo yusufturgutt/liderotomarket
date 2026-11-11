@@ -1,0 +1,35 @@
+# Fly.io ayarları — Lider Otomarket
+# Maliyeti düşük tutmak için: en küçük makine, boşta kalınca durur, ilk istekte ~1 sn'de açılır.
+# Sürekli açık kalsın isterseniz min_machines_running = 1 yapın (yaklaşık 2 $/ay).
+
+app = "liderotomarket"
+primary_region = "fra"
+
+[build]
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+
+  [[http_service.checks]]
+    grace_period = "5s"
+    interval = "30s"
+    method = "GET"
+    path = "/healthz"
+    timeout = "3s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

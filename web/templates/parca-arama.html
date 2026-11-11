@@ -1,0 +1,17 @@
+{{define "arama-sonuclari"}}
+{{if .Items}}
+<ul class="arama-liste" role="listbox" aria-label="Arama sonuçları">
+{{range .Items}}
+<li role="option"><a class="arama-oge" href="{{.URL}}">
+<span class="arama-gorsel">{{if .Img}}<img src="{{.Img}}" alt="" loading="lazy">{{else}}{{ikon "gorsel" 24}}{{end}}</span>
+<span class="arama-bilgi"><span class="arama-ad">{{.Name}}</span>
+<span class="arama-fiyat"><span{{if .HasOld}} class="indirimli"{{end}}>{{.Price}}</span>{{if .HasOld}} <s>{{.Old}}</s>{{end}}{{if not .InStock}} · Tükendi{{end}}</span></span>
+</a></li>
+{{end}}
+</ul>
+<a class="arama-tumu" href="{{.AllURL}}">Tüm sonuçları gör ({{.Total}}) →</a>
+{{else}}
+<p class="arama-yok">“{{.Q}}” için ürün bulunamadı.</p>
+{{end}}
+{{end}}
+{{define "icerik"}}{{end}}

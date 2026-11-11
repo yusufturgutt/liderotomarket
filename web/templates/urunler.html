@@ -1,0 +1,125 @@
+{{define "icerik"}}
+{{$p := .Page}}{{$st := $p.State}}
+<main class="icerik">
+
+<nav class="yol" aria-label="Konum">
+<a href="/">Ana Sayfa</a><span aria-hidden="true">/</span>
+{{if or $p.CurrentCat $st.Sale $st.New $st.Q}}<a class="d-only" href="/urunler">Tüm Ürünler</a><span class="d-only" aria-hidden="true">/</span>{{end}}
+<span aria-current="page">{{$p.Title}}</span>
+</nav>
+
+<div class="sayfa-bas">
+<div>
+<span class="ust-etiket d-only">Katalog</span>
+<h1>{{$p.Title}}</h1>
+</div>
+<span class="sayfa-bas-sayi">{{$p.Count}} ürün</span>
+</div>
+
+{{/* ---- Mobil: kategori çipleri + araç çubuğu ---- */}}
+<div class="m-kat-cipler yatay m-only" role="group" aria-label="Kategoriler">
+<a href="{{$st.WithoutCat}}"{{if not $p.CurrentCat}} aria-current="page"{{end}}>Tümü <span>{{$p.Total}}</span></a>
+{{range $p.CatList}}<a href="{{.URL}}"{{if .Current}} aria-current="page"{{end}}>{{.Name}} <span>{{.Count}}</span></a>{{end}}
+</div>
+<div class="m-arac m-only">
+<button type="button" class="btn btn-cerceve" data-katman-ac="filtre-panel" aria-controls="filtre-panel">{{ikon "filtre" 18}}Filtrele{{with $st.FilterCount}} ({{.}}){{end}}</button>
+<form action="/urunler" method="get">
+{{with $st.Cat}}<input type="hidden" name="kategori" value="{{.}}">{{end}}
+{{with $st.Q}}<input type="hidden" name="q" value="{{.}}">{{end}}
+{{if $st.Sale}}<input type="hidden" name="indirim" value="1">{{end}}
+{{if $st.New}}<input type="hidden" name="yeni" value="1">{{end}}
+<label class="gizli" for="sirala-m">Sırala</label>
+<select class="secici" id="sirala-m" name="sirala" data-otomatik>
+{{range $p.Sorts}}<option value="{{.Value}}"{{if .Selected}} selected{{end}}>{{.Short}}</option>{{end}}
+</select>
+<noscript><button type="submit" class="btn btn-siyah">Uygula</button></noscript>
+</form>
+</div>
+{{with $p.Chips}}
+<div class="m-cipler m-only">
+{{range .}}<a class="cip" href="{{.URL}}" aria-label="{{.Label}} filtresini kaldır">{{.Label}} {{ikon "kapat" 14}}</a>{{end}}
+</div>
+{{end}}
+
+<div class="katalog">
+
+{{/* ---- Masaüstü: filtreler ---- */}}
+<aside class="filtreler d-only" aria-label="Filtreler">
+<div>
+<h2 class="kucuk-bas">Kategoriler</h2>
+<div class="kat-liste">
+<a href="{{$st.WithoutCat}}"{{if not $p.CurrentCat}} aria-current="page"{{end}}>Tümü<span>{{$p.Total}}</span></a>
+{{range $p.CatList}}<a href="{{.URL}}"{{if .Current}} aria-current="page"{{end}}>{{.Name}}<span>{{.Count}}</span></a>{{end}}
+</div>
+</div>
+<form action="/urunler" method="get">
+<h2 class="kucuk-bas">Göster</h2>
+{{with $st.Cat}}<input type="hidden" name="kategori" value="{{.}}">{{end}}
+{{with $st.Q}}<input type="hidden" name="q" value="{{.}}">{{end}}
+{{with $st.Sort}}<input type="hidden" name="sirala" value="{{.}}">{{end}}
+<div class="secim">
+<label><input class="indirim-kutu" type="checkbox" name="indirim" value="1"{{if $st.Sale}} checked{{end}} data-otomatik>Sadece indirimli ürünler</label>
+<label><input class="yeni-kutu" type="checkbox" name="yeni" value="1"{{if $st.New}} checked{{end}} data-otomatik>Sadece yeni ürünler</label>
+</div>
+<noscript><button type="submit" class="btn btn-siyah">Uygula</button></noscript>
+</form>
+<div class="bilgi-kutu">Kategoriler Shopier mağazasıyla aynıdır. Siparişler Shopier üzerinden verilir.</div>
+</aside>
+
+<section class="urun-alani" aria-label="Ürünler">
+<div class="arac-cubugu d-only">
+<div class="cipler">
+{{range $p.Chips}}<a class="cip" href="{{.URL}}" aria-label="{{.Label}} filtresini kaldır">{{.Label}} {{ikon "kapat" 14}}</a>{{end}}
+</div>
+<form action="/urunler" method="get">
+{{with $st.Cat}}<input type="hidden" name="kategori" value="{{.}}">{{end}}
+{{with $st.Q}}<input type="hidden" name="q" value="{{.}}">{{end}}
+{{if $st.Sale}}<input type="hidden" name="indirim" value="1">{{end}}
+{{if $st.New}}<input type="hidden" name="yeni" value="1">{{end}}
+<label class="siralama" for="sirala">Sırala
+<select class="secici" id="sirala" name="sirala" data-otomatik>
+{{range $p.Sorts}}<option value="{{.Value}}"{{if .Selected}} selected{{end}}>{{.Label}}</option>{{end}}
+</select>
+</label>
+<noscript><button type="submit" class="btn btn-siyah">Uygula</button></noscript>
+</form>
+</div>
+
+{{if not $p.Items}}
+<div class="bos">
+<p>Bu filtrelerle eşleşen ürün yok.</p>
+<a class="btn btn-siyah" href="/urunler">Filtreleri temizle</a>
+</div>
+{{else}}
+<div class="izgara izgara-240">{{range $p.Items}}{{template "kart" .}}{{end}}</div>
+{{end}}
+</section>
+</div>
+</main>
+{{end}}
+
+{{define "sayfa-sonu"}}
+{{$st := .Page.State}}
+<div class="panel m-only" id="filtre-panel" data-katman hidden>
+<button type="button" class="panel-arka" data-katman-kapat aria-label="Filtre panelini kapat"></button>
+<div class="panel-kutu" role="dialog" aria-modal="true" aria-labelledby="filtre-baslik">
+<form action="/urunler" method="get">
+{{with $st.Cat}}<input type="hidden" name="kategori" value="{{.}}">{{end}}
+{{with $st.Q}}<input type="hidden" name="q" value="{{.}}">{{end}}
+{{with $st.Sort}}<input type="hidden" name="sirala" value="{{.}}">{{end}}
+<div class="panel-bas">
+<h2 id="filtre-baslik">Filtrele</h2>
+<button type="button" class="ikon-btn" data-katman-kapat data-ilk-odak aria-label="Kapat">{{ikon "kapat" 20}}</button>
+</div>
+<div class="panel-secim">
+<label><input class="indirim-kutu" type="checkbox" name="indirim" value="1"{{if $st.Sale}} checked{{end}} data-panel-secim>Sadece indirimli ürünler</label>
+<label><input class="yeni-kutu" type="checkbox" name="yeni" value="1"{{if $st.New}} checked{{end}} data-panel-secim>Sadece yeni ürünler</label>
+</div>
+<div class="panel-butonlar">
+<a class="btn btn-cerceve" href="/urunler">Temizle</a>
+<button type="submit" class="btn btn-mavi" data-panel-goster>{{.Page.Count}} ürünü göster</button>
+</div>
+</form>
+</div>
+</div>
+{{end}}
