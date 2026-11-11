@@ -123,7 +123,7 @@ func (s *Server) Handler() http.Handler {
 		http.ServeFileFS(w, r, s.static, "img/favicon.ico")
 	})
 	mux.HandleFunc("/", s.handleNotFound)
-	return recoverer(s.log, securityHeaders(gzipHandler(mux)))
+	return recoverer(s.log, canonicalHost(s.cfg.Site.BaseURL, securityHeaders(gzipHandler(mux))))
 }
 
 func (s *Server) render(w http.ResponseWriter, r *http.Request, status int, page string, data layoutVM) {

@@ -222,3 +222,25 @@ func TestListStateURL(t *testing.T) {
 		}
 	}
 }
+
+func TestCanonicalHostRedirect(t *testing.T) {
+	h := testServer(t, true).Handler()
+	for _, host := range []string{"www.liderotomarket.com", "liderotomarket.fly.dev"} {
+		req := httptest.NewRequest(http.MethodGet, "/urunler?q=koku", nil)
+		req.Host = host
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if rec.Code != http.StatusMovedPermanently || rec.Header().Get("Location") != "https://liderotomarket.com/urunler?q=koku" {
+			t.Errorf("%s yönlendirilmeli: %d %s", host, rec.Code, rec.Header().Get("Location"))
+		}
+	}
+	for _, c := range []struct{ host, path string }{{"liderotomarket.com", "/"}, {"localhost:8080", "/"}, {"liderotomarket.fly.dev", "/healthz"}} {
+		req := httptest.NewRequest(http.MethodGet, c.path, nil)
+		req.Host = c.host
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if rec.Code != http.StatusOK {
+			t.Errorf("%s%s yönlendirilmemeli: %d", c.host, c.path, rec.Code)
+		}
+	}
+}

@@ -1,0 +1,50 @@
+# main dalına her push'ta: testleri çalıştır, geçerse urunler.json'dan ürünleri ve görselleri işle ve Fly.io'ya deploy et.
+# Gereken repo secret'ı: FLY_API_TOKEN (yalnızca bu uygulamaya yetkili deploy anahtarı:
+#   flyctl tokens create deploy -a liderotomarket -x 8760h)
+name: Fly Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Actions sekmesinden elle çalıştırmak için
+
+# Aynı anda iki deploy çalışmasın; yeni push çalışan deploy'u bekler.
+concurrency:
+  group: fly-deploy
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test ./...
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      # Görseller her seferinde Shopier'den baştan indirilmesin diye önbellekte tutulur.
+      - uses: actions/cache@v4
+        with:
+          path: data/images
+          key: gorseller-${{ hashFiles('urunler.json') }}
+          restore-keys: gorseller-
+
+      # urunler.json → data/catalog.db + data/images (Docker imajına gömülür).
+      - run: go run ./cmd/liderotomarket sync
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      # --ha=false tek makine demek (aylık bütçe sınırı için).
+      - run: flyctl deploy --remote-only --ha=false
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

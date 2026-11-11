@@ -3,10 +3,33 @@ package httpserver
 import (
 	"compress/gzip"
 	"log/slog"
+	"net"
 	"net/http"
+	"net/url"
 	"strings"
 	"sync"
 )
+
+// canonicalHost www.* ve *.fly.dev isteklerini asıl alan adına kalıcı olarak yönlendirir.
+// Sağlık kontrolü (/healthz) ve yerel adresler etkilenmez.
+func canonicalHost(baseURL string, next http.Handler) http.Handler {
+	u, err := url.Parse(baseURL)
+	if err != nil || u.Host == "" {
+		return next
+	}
+	want := strings.ToLower(u.Host)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		host := strings.ToLower(r.Host)
+		if h, _, err := net.SplitHostPort(host); err == nil {
+			host = h
+		}
+		if r.URL.Path != "/healthz" && host != want && (host == "www."+want || strings.HasSuffix(host, ".fly.dev")) {
+			http.Redirect(w, r, u.Scheme+"://"+want+r.URL.RequestURI(), http.StatusMovedPermanently)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
 
 func securityHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
